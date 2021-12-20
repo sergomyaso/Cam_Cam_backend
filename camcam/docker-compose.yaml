@@ -1,0 +1,25 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:alpine
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: qwerty
+      POSTGRES_USER: postgres
+      POSTGRES_DB: camcam
+      PGPORT: 5433
+    expose:
+      - 5433
+  web:
+    depends_on:
+      - db
+    image: camcam
+    environment:
+      DB_HOST: db
+      DB_PORT: 5433
+      DB_TITLE: camcam
+      DB_PASSWORD: qwerty
+    ports:
+      - 8080:8080
+    restart: always
